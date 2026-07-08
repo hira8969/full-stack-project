@@ -33,6 +33,12 @@ public class HomeController {
         model.addAttribute("title","About- Smart Contact Manager");
         return "about";
     }
+    @GetMapping("/signup")
+    public String signup(Model model) {
+        model.addAttribute("title","Signup- Smart Contact Manager");
+        return "signup";
+    }
+    
 
     
 }
