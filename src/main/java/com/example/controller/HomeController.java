@@ -23,7 +23,7 @@ public class HomeController {
 
 
         
-    @GetMapping("/home")
+    @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("title","Home- Smart Contact Manager");
         return "home";
@@ -33,10 +33,6 @@ public class HomeController {
         model.addAttribute("title","About- Smart Contact Manager");
         return "about";
     }
-    @GetMapping("/")
-    public String hello(Model model) {
-        return "home";
-    }
-    
+
     
 }
