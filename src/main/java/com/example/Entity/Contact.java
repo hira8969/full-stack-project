@@ -1,4 +1,4 @@
-package com.example.Entity;
+package com.example.entity;
 
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
@@ -20,7 +20,7 @@ public class Contact {
     private String email;
     private String phone;
     private String image;
-    @Column(length = 5000)
+    @Column(length = 1000)
     private String description;
 
     @ManyToOne    
