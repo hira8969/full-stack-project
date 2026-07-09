@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.dao.UserRepositry;
 import com.example.entity.User;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 
 
 @Controller
@@ -36,6 +42,7 @@ public class HomeController {
     @GetMapping("/signup")
     public String signup(Model model) {
         model.addAttribute("title","Signup- Smart Contact Manager");
+        model.addAttribute("user",new User());
         return "signup";
     }
     @GetMapping("/login")
@@ -46,6 +53,13 @@ public class HomeController {
 
         return "loginpage";
     }
-
+    //this handler method will handle the registratio
+    @PostMapping("/do_register")
+    public String registerUser(@ModelAttribute("user") User user, @RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model model) {
+        
+        userRepository.save(user);
+        return "redirect:/login";
+    }
+    
     
 }
