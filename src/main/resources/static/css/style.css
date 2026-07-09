@@ -69,3 +69,82 @@ body{
 .btn-primary:hover{
     background:#2b0a8d;
 }
+/* ================= LOGIN PAGE ================= */
+
+.login-section{
+    min-height: 100vh;
+    background: linear-gradient(
+        rgba(29, 5, 99, 0.85),
+        rgba(29, 5, 99, 0.85)
+    ),
+    url('../img/banner.png');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 100px 0;
+}
+
+.login-section .card{
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.login-section .card-body{
+    background: #ffffff;
+}
+
+.login-section h2{
+    color: #1d0563;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.login-section .form-label{
+    font-weight: 600;
+    color: #333;
+}
+
+.login-section .form-control{
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid #ced4da;
+}
+
+.login-section .form-control:focus{
+    border-color: #1d0563;
+    box-shadow: 0 0 8px rgba(29, 5, 99, 0.3);
+}
+
+.login-section .btn-primary{
+    background-color: #1d0563;
+    border: none;
+    border-radius: 10px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.login-section .btn-primary:hover{
+    background-color: #2b0a8d;
+}
+
+.login-section a{
+    text-decoration: none;
+    color: #1d0563;
+    font-weight: 600;
+}
+
+.login-section a:hover{
+    text-decoration: underline;
+}
+
+.login-section hr{
+    margin: 25px 0;
+}
