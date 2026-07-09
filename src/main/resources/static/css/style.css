@@ -69,6 +69,91 @@ body{
 .btn-primary:hover{
     background:#2b0a8d;
 }
+/* ================= SIGNUP PAGE ================= */
+
+.signup-section{
+    min-height:100vh;
+
+    background:
+        linear-gradient(
+            rgba(29,5,99,0.85),
+            rgba(29,5,99,0.85)
+        ),
+        url('../img/banner.png');
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:100px 0;
+}
+
+.signup-section .card{
+    border:none;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+.signup-section .card-body{
+    background:#fff;
+}
+
+.signup-section h2{
+    color:#1d0563;
+    font-weight:700;
+    margin-bottom:25px;
+}
+
+.signup-section .form-label{
+    font-weight:600;
+    color:#333;
+}
+
+.signup-section .form-control{
+    border-radius:10px;
+    padding:12px;
+    border:1px solid #ced4da;
+}
+
+.signup-section .form-control:focus{
+    border-color:#1d0563;
+    box-shadow:0 0 10px rgba(29,5,99,0.25);
+}
+
+.signup-section textarea{
+    resize:none;
+}
+
+.signup-section .form-check-label{
+    color:#555;
+}
+
+.signup-section .btn-primary{
+    background:#1d0563;
+    border:none;
+    border-radius:10px;
+    padding:10px 25px;
+    font-weight:600;
+}
+
+.signup-section .btn-primary:hover{
+    background:#2b0a8d;
+}
+
+.signup-section .btn-secondary{
+    border-radius:10px;
+    padding:10px 25px;
+}
+
+.signup-section .card:hover{
+    transform:translateY(-3px);
+    transition:0.3s ease;
+}
 /* ================= LOGIN PAGE ================= */
 
 .login-section{
