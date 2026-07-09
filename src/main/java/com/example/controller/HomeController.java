@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @Controller
 public class HomeController {
 
-    private final UserRepositry userRepository;
+    @Autowired
+    private UserRepositry userRepository;
 
     @Autowired
     public HomeController(UserRepositry userRepository) {
@@ -51,14 +52,25 @@ public class HomeController {
         model.addAttribute("title",
                 "Login - Smart Contact Manager");
 
-        return "loginpage";
+        return "login";
     }
     //this handler method will handle the registratio
     @PostMapping("/do_register")
     public String registerUser(@ModelAttribute("user") User user, @RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model model) {
         
-        userRepository.save(user);
-        return "redirect:/login";
+        if(!agreement) {
+            System.out.println("You have not agreed the terms and conditions");
+            throw new RuntimeException("You have not agreed the terms and conditions");
+        }
+        user.setRole("Role_USER");
+        user.setEnabled(true);
+        user.setImageUrl("default.png");
+        System.out.println("Agreement: " + agreement);
+        System.out.println("User: " + user);
+        User result=this.userRepository.save(user);
+
+        model.addAttribute("user",result);
+        return "signup";
     }
     
     
