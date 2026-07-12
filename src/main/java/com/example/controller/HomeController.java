@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.dao.UserRepositry;
 import com.example.entity.User;
+import com.example.healper.messege;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,11 +60,13 @@ public class HomeController {
     }
     //this handler method will handle the registratio
     @PostMapping("/do_register")
-    public String registerUser(@ModelAttribute("user") User user, @RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model model) {
+    public String registerUser(@ModelAttribute("user") User user, @RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model model , HttpSession session) {
         
-        if(!agreement) {
+        try{
+            if(!agreement) {
             System.out.println("You have not agreed the terms and conditions");
-            throw new RuntimeException("You have not agreed the terms and conditions");
+            throw new Exception("You have not agreed the terms and conditions");
+            
         }
         user.setRole("Role_USER");
         user.setEnabled(true);
@@ -69,8 +75,16 @@ public class HomeController {
         System.out.println("User: " + user);
         User result=this.userRepository.save(user);
 
-        model.addAttribute("user",result);
+        session.setAttribute("messege", new messege("successfully register", "alert-error"));
         return "signup";
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            model.addAttribute("user",user);
+            session.setAttribute("messege", new messege("something went wrong" + e.getMessage(), "alert-error"));
+            return "signup";
+        }
+       
     }
     
     
