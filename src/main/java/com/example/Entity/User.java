@@ -3,38 +3,67 @@ package com.example.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.mapping.Array;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 @Entity
 @Table(name = "user")
 public class User {
+
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @NotBlank(message = "Name cannot be empty")
+    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     private String name;
+
+    @NotBlank(message = "Email cannot be empty")
+    @Email(message = "Enter a valid email address")
     @Column(unique = true, length = 255)
     private String email;
+
+    @NotBlank(message = "Password cannot be empty")
+    @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
-    public User(String password) {
-        this.password = password;
-    }
+
+    @NotBlank(message = "Role cannot be empty")
     private String role;
+
     private boolean enabled;
+
     private String imageUrl;
+
+    @NotBlank(message = "About field cannot be empty")
+    @Size(max = 500, message = "About cannot exceed 500 characters")
     @Column(length = 500)
     private String about;
-    @OneToMany(cascade = jakarta.persistence.CascadeType.ALL, mappedBy = "user", fetch = jakarta.persistence.FetchType.LAZY)
-    private List<Contact> contacts= new ArrayList<>();
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            mappedBy = "user",
+            fetch = FetchType.LAZY)
+    private List<Contact> contacts = new ArrayList<>();
 
     public User() {
     }
+
+    public User(String password) {
+        this.password = password;
+    }
+
+    // Getters and Setters
 
     public int getId() {
         return id;
@@ -42,7 +71,7 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
-    }
+    }   
 
     public String getName() {
         return name;
@@ -54,7 +83,7 @@ public class User {
 
     public String getEmail() {
         return email;
-    }
+    }   
 
     public void setEmail(String email) {
         this.email = email;
@@ -62,7 +91,7 @@ public class User {
 
     public String getPassword() {
         return password;
-    }
+    }   
 
     public void setPassword(String password) {
         this.password = password;
@@ -70,7 +99,7 @@ public class User {
 
     public String getRole() {
         return role;
-    }
+    }   
 
     public void setRole(String role) {
         this.role = role;
@@ -78,7 +107,7 @@ public class User {
 
     public boolean isEnabled() {
         return enabled;
-    }
+    }   
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
@@ -86,7 +115,7 @@ public class User {
 
     public String getImageUrl() {
         return imageUrl;
-    }
+    }   
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
@@ -94,7 +123,7 @@ public class User {
 
     public String getAbout() {
         return about;
-    }
+    }   
 
     public void setAbout(String about) {
         this.about = about;
@@ -102,10 +131,9 @@ public class User {
 
     public List<Contact> getContacts() {
         return contacts;
-    }
+    }   
 
     public void setContacts(List<Contact> contacts) {
         this.contacts = contacts;
     }
-    
 }
