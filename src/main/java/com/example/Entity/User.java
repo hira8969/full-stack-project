@@ -38,7 +38,7 @@ public class User {
     @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
 
-    @NotBlank(message = "Role cannot be empty")
+    
     private String role;
 
     private boolean enabled;
