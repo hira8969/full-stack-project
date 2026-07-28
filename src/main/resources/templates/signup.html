@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: layout(~{::section})}">
+
+<body>
+
+    <section class="signup-section py-5">
+
+        <div class="container">
+
+            <div class="row justify-content-center">
+
+                <div class="col-md-10 col-lg-8">
+
+                    <div class="card shadow border-0">
+
+                        <div class="card-body p-5">
+
+                            <!-- Logo -->
+                            <div class="text-center mb-4">
+                                <img th:src="@{/img/membership.png}" alt="Membership" class="img-fluid" style="max-width:180px;">
+                            </div>
+
+                            <h2 class="text-center mb-2">
+                                Create Your Account
+                            </h2>
+
+                            <p class="text-center text-muted mb-4">
+                                Join Smart Contact Management and manage your contacts efficiently.
+                            </p>
+
+                            <!-- Success Message -->
+                            <div class="alert alert-success text-center" th:if="${successMessage}">
+                                <span th:text="${successMessage}"></span>
+                            </div>
+
+                            <form th:action="@{/do_register}" method="post" th:object="${user}">
+
+                                <!-- Global Validation Error -->
+                                <div class="alert alert-danger" th:if="${#fields.hasErrors()}">
+                                    Please correct the errors below.
+                                </div>
+
+                                <!-- Name -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                    Full Name
+                                </label>
+
+                                    <input type="text" th:field="*{name}" class="form-control" placeholder="Enter your full name">
+
+                                    <small class="text-danger" th:errors="*{name}">
+                                </small>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                    Email Address
+                                </label>
+
+                                    <input type="email" th:field="*{email}" class="form-control" placeholder="Enter your email">
+
+                                    <small class="text-danger" th:errors="*{email}">
+                                </small>
+                                </div>
+
+                                <!-- Password -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                    Password
+                                </label>
+
+                                    <input type="password" th:field="*{password}" class="form-control" placeholder="Create a strong password">
+
+                                    <small class="text-danger" th:errors="*{password}">
+                                </small>
+                                </div>
+
+                                <!-- About -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                    About Yourself
+                                </label>
+
+                                    <textarea th:field="*{about}" class="form-control" rows="4" placeholder="Tell us something about yourself..."></textarea>
+
+                                    <small class="text-danger" th:errors="*{about}">
+                                </small>
+                                </div>
+
+                                <!-- Hidden Image -->
+                                <input type="hidden" th:field="*{imageUrl}" value="membership.png">
+
+                                <!-- Terms -->
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="checkbox" id="agreement" name="agreement" required>
+
+                                    <label class="form-check-label" for="agreement">
+                                    I accept the Terms & Conditions
+                                </label>
+                                </div>
+
+                                <!-- Buttons -->
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary px-4 me-2">
+                                    Register
+                                </button>
+
+                                    <button type="reset" class="btn btn-secondary px-4">
+                                    Reset
+                                </button>
+                                </div>
+
+                            </form>
+
+                            <hr class="my-4">
+
+                            <p class="text-center mb-0">
+                                Already have an account?
+                                <a th:href="@{/login}" class="text-decoration-none">
+                                Sign In
+                            </a>
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>
