@@ -1,0 +1,83 @@
+<div style="min-height:100vh;display:flex;background:#0a0a0f;">
+
+  <!-- Left decorative panel -->
+  <div class="hidden lg:flex" style="width:50%;flex-direction:column;justify-content:space-between;padding:48px;background:linear-gradient(135deg,#0d1b2a 0%,#1a1a3e 50%,#0d2b4a 100%);">
+    <div class="flex items-center gap-3">
+      <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;">
+        <mat-icon style="color:white;">description</mat-icon>
+      </div>
+      <span style="font-family:'Outfit',sans-serif;font-size:20px;font-weight:700;color:white;">ResumeAI</span>
+    </div>
+    <div>
+      <h2 style="font-family:'Outfit',sans-serif;font-size:40px;font-weight:700;color:white;margin-bottom:16px;line-height:1.2;">
+        Your AI-Powered<br>Career Assistant
+      </h2>
+      <p style="color:rgba(255,255,255,0.5);font-size:17px;margin-bottom:40px;">Build ATS-optimized resumes with professional templates and AI content improvement.</p>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="flex items-center gap-3">
+          <div style="width:32px;height:32px;border-radius:8px;background:rgba(59,130,246,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <mat-icon style="color:#3b82f6;font-size:16px;width:16px;height:16px;">check</mat-icon>
+          </div>
+          <span style="color:rgba(255,255,255,0.7);">9 Professional ATS-Optimized Templates</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <div style="width:32px;height:32px;border-radius:8px;background:rgba(139,92,246,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <mat-icon style="color:#8b5cf6;font-size:16px;width:16px;height:16px;">check</mat-icon>
+          </div>
+          <span style="color:rgba(255,255,255,0.7);">AI Content Improvement with Gemini</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <div style="width:32px;height:32px;border-radius:8px;background:rgba(6,182,212,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <mat-icon style="color:#06b6d4;font-size:16px;width:16px;height:16px;">check</mat-icon>
+          </div>
+          <span style="color:rgba(255,255,255,0.7);">Real-time ATS Score Analysis</span>
+        </div>
+      </div>
+    </div>
+    <p style="color:rgba(255,255,255,0.2);font-size:13px;">&copy; 2026 ResumeAI Platform</p>
+  </div>
+
+  <!-- Right login form -->
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:32px;">
+    <div style="width:100%;max-width:420px;">
+      <div style="margin-bottom:32px;">
+        <h1 style="font-family:'Outfit',sans-serif;font-size:32px;font-weight:700;color:white;margin-bottom:8px;">Welcome back</h1>
+        <p style="color:rgba(255,255,255,0.5);">Sign in to your ResumeAI account</p>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" style="display:flex;flex-direction:column;gap:16px;">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Email address</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="you@example.com">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error *ngIf="form.get('email')?.hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="form.get('email')?.hasError('email')">Enter a valid email</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'">
+          <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+            <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required</mat-error>
+        </mat-form-field>
+
+        <div class="flex items-center justify-between">
+          <mat-checkbox formControlName="rememberMe" style="color:rgba(255,255,255,0.6);font-size:14px;">Remember me</mat-checkbox>
+          <a routerLink="/auth/forgot-password" style="color:#3b82f6;font-size:14px;text-decoration:none;">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn-primary w-full" style="padding:14px;font-size:16px;" [disabled]="loading">
+          <span *ngIf="!loading">Sign In</span>
+          <span *ngIf="loading">Signing in...</span>
+        </button>
+
+        <p style="text-align:center;font-size:14px;color:rgba(255,255,255,0.4);">
+          Don't have an account?
+          <a routerLink="/auth/register" style="color:#3b82f6;text-decoration:none;font-weight:500;">Create account</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
