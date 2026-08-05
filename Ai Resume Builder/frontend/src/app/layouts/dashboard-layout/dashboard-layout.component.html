@@ -1,0 +1,82 @@
+<div style="display:flex;height:100vh;overflow:hidden;background:#0a0a0f;">
+
+  <!-- Sidebar -->
+  <aside [style.width]="sidebarCollapsed ? '72px' : '260px'"
+         style="display:flex;flex-direction:column;transition:width 0.3s ease;margin:12px;border-radius:20px;overflow:hidden;flex-shrink:0;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);">
+
+    <!-- Logo -->
+    <div style="padding:20px;border-bottom:1px solid rgba(255,255,255,0.06);">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <mat-icon style="color:white;font-size:18px;width:18px;height:18px;">description</mat-icon>
+        </div>
+        <div *ngIf="!sidebarCollapsed" style="overflow:hidden;">
+          <div style="font-family:'Outfit',sans-serif;font-weight:700;color:white;font-size:17px;line-height:1.2;">ResumeAI</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.3);">Pro Platform</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <nav style="flex:1;padding:12px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;">
+      <a *ngFor="let item of navItems"
+         [routerLink]="item.route"
+         routerLinkActive="active-nav"
+         [matTooltip]="sidebarCollapsed ? item.label : ''"
+         matTooltipPosition="right"
+         class="nav-item"
+         style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;cursor:pointer;text-decoration:none;">
+        <mat-icon style="flex-shrink:0;font-size:20px;width:20px;height:20px;">{{ item.icon }}</mat-icon>
+        <span *ngIf="!sidebarCollapsed" style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ item.label }}</span>
+      </a>
+    </nav>
+
+    <!-- User bottom -->
+    <div style="padding:12px;border-top:1px solid rgba(255,255,255,0.06);">
+      <div [matMenuTriggerFor]="userMenu" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
+        <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:white;flex-shrink:0;">
+          {{ getInitial() }}
+        </div>
+        <div *ngIf="!sidebarCollapsed" style="flex:1;min-width:0;">
+          <div style="font-size:13px;font-weight:500;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ currentUser?.fullName }}</div>
+          <div style="font-size:11px;white-space:nowrap;" [style.color]="roleColor">{{ currentUser?.role }}</div>
+        </div>
+        <mat-icon *ngIf="!sidebarCollapsed" style="color:rgba(255,255,255,0.25);font-size:18px;width:18px;height:18px;">expand_more</mat-icon>
+      </div>
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item [routerLink]="'/dashboard/profile'">
+          <mat-icon>person</mat-icon><span>My Profile</span>
+        </button>
+        <button mat-menu-item (click)="logout()" style="color:#ef4444;">
+          <mat-icon style="color:#ef4444;">logout</mat-icon><span>Sign Out</span>
+        </button>
+      </mat-menu>
+    </div>
+  </aside>
+
+  <!-- Main content area -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;">
+
+    <!-- Header -->
+    <header style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;margin:12px 12px 0;border-radius:16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button mat-icon-button (click)="toggleSidebar()" style="color:rgba(255,255,255,0.5);">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button mat-icon-button style="color:rgba(255,255,255,0.5);" matTooltip="Notifications">
+          <mat-icon>notifications_none</mat-icon>
+        </button>
+        <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:white;cursor:pointer;">
+          {{ getInitial() }}
+        </div>
+      </div>
+    </header>
+
+    <!-- Router outlet -->
+    <main style="flex:1;overflow-y:auto;padding:12px;">
+      <router-outlet />
+    </main>
+  </div>
+</div>
