@@ -1,0 +1,123 @@
+<div style="background:#0a0a0f;min-height:100vh;font-family:'Inter',sans-serif;">
+
+  <!-- Navigation -->
+  <nav style="position:sticky;top:0;z-index:50;background:rgba(10,10,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);" class="px-6 py-4">
+    <div style="max-width:1280px;margin:0 auto;" class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;">
+          <mat-icon style="color:white;font-size:20px;width:20px;height:20px;">description</mat-icon>
+        </div>
+        <span style="font-family:'Outfit',sans-serif;font-size:20px;font-weight:700;color:white;">ResumeAI</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <a routerLink="/auth/login" style="color:rgba(255,255,255,0.6);text-decoration:none;padding:8px 16px;font-size:14px;" class="hover:text-white transition-colors">Sign In</a>
+        <a routerLink="/auth/register" class="btn-primary" style="font-size:14px;padding:10px 22px;">Get Started Free</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section style="position:relative;overflow:hidden;padding:96px 24px;text-align:center;">
+    <div style="position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(59,130,246,0.08) 0%,transparent 70%);pointer-events:none;"></div>
+    <div style="position:absolute;top:100px;right:10%;width:400px;height:400px;background:radial-gradient(circle,rgba(139,92,246,0.06) 0%,transparent 70%);pointer-events:none;"></div>
+    <div style="max-width:900px;margin:0 auto;position:relative;">
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:999px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);color:#3b82f6;font-size:13px;margin-bottom:32px;">
+        <mat-icon style="font-size:16px;width:16px;height:16px;">auto_awesome</mat-icon>
+        Powered by Google Gemini AI
+      </div>
+      <h1 style="font-family:'Outfit',sans-serif;font-size:clamp(40px,7vw,72px);font-weight:800;color:white;margin-bottom:24px;line-height:1.1;">
+        Build Resumes That
+        <span class="gradient-text"> Actually Get Hired</span>
+      </h1>
+      <p style="font-size:20px;color:rgba(255,255,255,0.5);margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6;">
+        AI-powered resume builder with real-time ATS scoring, professional LaTeX templates, and intelligent content improvement.
+      </p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
+        <a routerLink="/auth/register" class="btn-primary" style="font-size:16px;padding:14px 32px;display:inline-flex;align-items:center;gap:8px;">
+          <mat-icon>rocket_launch</mat-icon> Start Building Free
+        </a>
+        <a routerLink="/auth/login" style="display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.7);text-decoration:none;font-size:16px;" class="hover:text-white transition-all">
+          <mat-icon>analytics</mat-icon> Analyze My Resume
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:64px;max-width:600px;margin-left:auto;margin-right:auto;">
+        <div *ngFor="let stat of stats" style="text-align:center;">
+          <div class="gradient-text" style="font-size:32px;font-weight:800;font-family:'Outfit',sans-serif;">{{ stat.value }}</div>
+          <div style="color:rgba(255,255,255,0.4);font-size:13px;margin-top:4px;">{{ stat.label }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section style="padding:80px 24px;max-width:1280px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:64px;">
+      <h2 style="font-family:'Outfit',sans-serif;font-size:40px;font-weight:700;color:white;margin-bottom:16px;">Everything You Need to Land Your Dream Job</h2>
+      <p style="color:rgba(255,255,255,0.5);font-size:18px;">Professional tools powered by cutting-edge AI technology</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;">
+      <div *ngFor="let feature of features" class="glass-card" style="padding:24px;">
+        <div style="width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;" [style.background]="feature.color + '20'">
+          <mat-icon [style.color]="feature.color">{{ feature.icon }}</mat-icon>
+        </div>
+        <h3 style="font-size:18px;font-weight:600;color:white;margin-bottom:8px;">{{ feature.title }}</h3>
+        <p style="color:rgba(255,255,255,0.5);font-size:14px;line-height:1.6;">{{ feature.desc }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it Works -->
+  <section style="padding:80px 24px;background:rgba(255,255,255,0.01);">
+    <div style="max-width:1000px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:64px;">
+        <h2 style="font-family:'Outfit',sans-serif;font-size:40px;font-weight:700;color:white;margin-bottom:16px;">How It Works</h2>
+        <p style="color:rgba(255,255,255,0.5);">From blank page to hired in 3 simple steps</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;">
+        <div *ngFor="let step of steps" style="text-align:center;">
+          <div style="width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(139,92,246,0.15));border:1px solid rgba(59,130,246,0.2);">
+            <mat-icon style="color:#3b82f6;font-size:28px;width:28px;height:28px;">{{ step.icon }}</mat-icon>
+          </div>
+          <div class="gradient-text" style="font-size:60px;font-weight:900;font-family:'Outfit',sans-serif;margin-bottom:12px;">{{ step.num }}</div>
+          <h3 style="font-size:18px;font-weight:600;color:white;margin-bottom:8px;">{{ step.title }}</h3>
+          <p style="color:rgba(255,255,255,0.5);font-size:14px;">{{ step.desc }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Templates -->
+  <section style="padding:80px 24px;max-width:1280px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:48px;">
+      <h2 style="font-family:'Outfit',sans-serif;font-size:40px;font-weight:700;color:white;margin-bottom:16px;">9 Professional Templates</h2>
+      <p style="color:rgba(255,255,255,0.5);">All templates are ATS-optimized and Overleaf-quality</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;">
+      <div *ngFor="let tpl of templates" class="glass-card" style="padding:20px;text-align:center;cursor:pointer;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;transition:transform 0.3s;" [style.background]="tpl.color + '20'">
+          <mat-icon [style.color]="tpl.color">{{ tpl.icon }}</mat-icon>
+        </div>
+        <div style="font-size:14px;font-weight:500;color:white;">{{ tpl.name }}</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-top:4px;">{{ tpl.tag }}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding:96px 24px;text-align:center;">
+    <div class="glass-card" style="max-width:700px;margin:0 auto;padding:64px 48px;">
+      <h2 style="font-family:'Outfit',sans-serif;font-size:40px;font-weight:700;color:white;margin-bottom:16px;">Ready to Build Your Perfect Resume?</h2>
+      <p style="color:rgba(255,255,255,0.5);margin-bottom:32px;font-size:18px;">Join 50,000+ professionals who've landed their dream jobs with ResumeAI</p>
+      <a routerLink="/auth/register" class="btn-primary" style="font-size:18px;padding:16px 40px;display:inline-flex;align-items:center;gap:8px;">
+        <mat-icon>auto_awesome</mat-icon> Get Started for Free
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="padding:32px 24px;border-top:1px solid rgba(255,255,255,0.06);text-align:center;">
+    <p style="color:rgba(255,255,255,0.25);font-size:14px;">&copy; 2026 ResumeAI Platform. Built with ❤️ for job seekers worldwide.</p>
+  </footer>
+</div>
