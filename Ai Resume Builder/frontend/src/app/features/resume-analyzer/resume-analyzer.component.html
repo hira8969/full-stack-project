@@ -1,0 +1,125 @@
+<div style="padding:24px;max-width:1200px;">
+  <h1 style="font-family:'Outfit',sans-serif;font-size:28px;font-weight:700;color:white;margin-bottom:8px;">ATS Resume Analyzer</h1>
+  <p style="color:rgba(255,255,255,0.45);margin-bottom:24px;">Upload your resume to get a detailed ATS compatibility score and improvement suggestions</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+
+    <!-- Upload Zone -->
+    <div class="glass-card" style="padding:24px;">
+      <h3 style="font-size:16px;font-weight:600;color:white;margin-bottom:16px;display:flex;align-items:center;gap:8px;">
+        <mat-icon style="color:#3b82f6;">upload_file</mat-icon>Upload Resume
+      </h3>
+
+      <div (dragover)="onDragOver($event)" (dragleave)="onDragLeave()" (drop)="onDrop($event)"
+           style="border:2px dashed;border-radius:16px;padding:40px 24px;text-align:center;transition:all 0.3s;cursor:pointer;"
+           [style.borderColor]="isDragging ? '#3b82f6' : 'rgba(255,255,255,0.1)'"
+           [style.background]="isDragging ? 'rgba(59,130,246,0.05)' : 'rgba(255,255,255,0.02)'"
+           (click)="fileInput.click()">
+
+        <div *ngIf="!selectedFile">
+          <mat-icon style="font-size:48px;width:48px;height:48px;color:rgba(255,255,255,0.2);margin-bottom:16px;">cloud_upload</mat-icon>
+          <p style="color:rgba(255,255,255,0.6);font-size:15px;margin-bottom:8px;">Drag & drop your resume here</p>
+          <p style="color:rgba(255,255,255,0.3);font-size:13px;">PDF or DOCX · Max 10MB</p>
+          <button class="btn-primary" style="margin-top:16px;padding:10px 24px;font-size:14px;" (click)="fileInput.click();$event.stopPropagation()">Browse File</button>
+        </div>
+
+        <div *ngIf="selectedFile" style="padding:8px;">
+          <div style="width:56px;height:56px;border-radius:16px;background:rgba(59,130,246,0.15);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+            <mat-icon style="color:#3b82f6;font-size:28px;width:28px;height:28px;">description</mat-icon>
+          </div>
+          <p style="color:white;font-size:15px;font-weight:500;margin-bottom:4px;">{{ selectedFile.name }}</p>
+          <p style="color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:16px;">{{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB</p>
+          <div style="display:flex;gap:10px;justify-content:center;">
+            <button (click)="clearFile();$event.stopPropagation()" style="padding:8px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.5);cursor:pointer;font-size:13px;">Change</button>
+          </div>
+        </div>
+      </div>
+
+      <input #fileInput type="file" accept=".pdf,.docx" style="display:none;" (change)="onFileSelected($event)">
+    </div>
+
+    <!-- Job Description (optional) -->
+    <div class="glass-card" style="padding:24px;">
+      <h3 style="font-size:16px;font-weight:600;color:white;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+        <mat-icon style="color:#8b5cf6;">work</mat-icon>Job Description
+        <span style="font-size:12px;color:rgba(255,255,255,0.3);font-weight:400;">(optional)</span>
+      </h3>
+      <p style="color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:16px;">Paste a job description to get a match score for that specific role</p>
+      <form [formGroup]="jdForm">
+        <mat-form-field appearance="outline" class="w-full" style="height:calc(100% - 80px);">
+          <mat-label>Paste Job Description</mat-label>
+          <textarea matInput formControlName="jobDescription" rows="10" placeholder="Paste the full job description here to get targeted recommendations..."></textarea>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+
+  <!-- Analyze Button -->
+  <div style="text-align:center;margin-bottom:32px;">
+    <button (click)="analyze()" class="btn-primary" style="padding:14px 48px;font-size:17px;display:inline-flex;align-items:center;gap:10px;" [disabled]="!selectedFile || analyzing">
+      <mat-spinner *ngIf="analyzing" diameter="20" style="margin:0;"></mat-spinner>
+      <mat-icon *ngIf="!analyzing" style="font-size:22px;width:22px;height:22px;">analytics</mat-icon>
+      {{ analyzing ? 'Analyzing your resume...' : 'Analyze Resume' }}
+    </button>
+  </div>
+
+  <!-- Results -->
+  <div *ngIf="result">
+
+    <!-- Score Cards -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:24px;">
+      <div *ngFor="let cat of scoreCategories" class="glass-card" style="padding:18px;text-align:center;">
+        <div style="width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;" [style.background]="cat.color + '20'">
+          <mat-icon [style.color]="cat.color" style="font-size:20px;width:20px;height:20px;">{{ cat.icon }}</mat-icon>
+        </div>
+        <div style="font-size:36px;font-weight:800;margin-bottom:4px;" [style.color]="getScoreColor(result[cat.key] || 0)">
+          {{ result[cat.key] || 0 }}
+        </div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:8px;">{{ cat.label }}</div>
+        <mat-progress-bar mode="determinate" [value]="result[cat.key] || 0" style="border-radius:4px;height:4px;"></mat-progress-bar>
+        <div style="font-size:11px;margin-top:6px;" [style.color]="getScoreColor(result[cat.key] || 0)">{{ getScoreLabel(result[cat.key] || 0) }}</div>
+      </div>
+    </div>
+
+    <!-- Keywords and Suggestions -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+
+      <!-- Matching keywords -->
+      <div class="glass-card" style="padding:20px;">
+        <h3 style="font-size:15px;font-weight:600;color:white;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+          <mat-icon style="color:#10b981;font-size:18px;width:18px;height:18px;">check_circle</mat-icon>Matching Keywords
+        </h3>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span *ngFor="let kw of result.matchingKeywords"
+                style="padding:4px 10px;border-radius:999px;font-size:12px;background:rgba(16,185,129,0.1);color:#10b981;border:1px solid rgba(16,185,129,0.2);">
+            {{ kw }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Missing keywords -->
+      <div class="glass-card" style="padding:20px;">
+        <h3 style="font-size:15px;font-weight:600;color:white;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+          <mat-icon style="color:#ef4444;font-size:18px;width:18px;height:18px;">cancel</mat-icon>Missing Keywords
+        </h3>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span *ngFor="let kw of result.missingKeywords"
+                style="padding:4px 10px;border-radius:999px;font-size:12px;background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.2);">
+            {{ kw }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Suggestions -->
+      <div class="glass-card" style="padding:20px;">
+        <h3 style="font-size:15px;font-weight:600;color:white;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+          <mat-icon style="color:#f59e0b;font-size:18px;width:18px;height:18px;">tips_and_updates</mat-icon>Suggestions
+        </h3>
+        <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;">
+          <li *ngFor="let tip of result.suggestions" style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;">{{ tip }}</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
