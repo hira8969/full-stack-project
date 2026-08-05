@@ -1,0 +1,85 @@
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#0a0a0f;">
+  <div style="width:100%;max-width:480px;">
+
+    <!-- Logo -->
+    <div style="text-align:center;margin-bottom:32px;">
+      <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+        <mat-icon style="color:white;font-size:28px;width:28px;height:28px;">description</mat-icon>
+      </div>
+      <h1 style="font-family:'Outfit',sans-serif;font-size:32px;font-weight:700;color:white;margin-bottom:8px;">Create Account</h1>
+      <p style="color:rgba(255,255,255,0.5);">Join 50,000+ professionals on ResumeAI</p>
+    </div>
+
+    <!-- Role Selection -->
+    <div class="glass-card" style="padding:24px;margin-bottom:24px;">
+      <p style="color:rgba(255,255,255,0.6);font-size:14px;margin-bottom:16px;">I am a...</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div (click)="selectRole('CANDIDATE')"
+             style="border-radius:12px;padding:16px;cursor:pointer;transition:all 0.2s;text-align:center;"
+             [style.border]="form.value.role === 'CANDIDATE' ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0.08)'"
+             [style.background]="form.value.role === 'CANDIDATE' ? 'rgba(59,130,246,0.1)' : 'transparent'">
+          <mat-icon style="font-size:28px;width:28px;height:28px;margin-bottom:8px;"
+                    [style.color]="form.value.role === 'CANDIDATE' ? '#3b82f6' : 'rgba(255,255,255,0.3)'">person</mat-icon>
+          <div style="font-size:14px;font-weight:500;color:white;">Job Seeker</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px;">Build & analyze resumes</div>
+        </div>
+        <div (click)="selectRole('RECRUITER')"
+             style="border-radius:12px;padding:16px;cursor:pointer;transition:all 0.2s;text-align:center;"
+             [style.border]="form.value.role === 'RECRUITER' ? '1px solid #8b5cf6' : '1px solid rgba(255,255,255,0.08)'"
+             [style.background]="form.value.role === 'RECRUITER' ? 'rgba(139,92,246,0.1)' : 'transparent'">
+          <mat-icon style="font-size:28px;width:28px;height:28px;margin-bottom:8px;"
+                    [style.color]="form.value.role === 'RECRUITER' ? '#8b5cf6' : 'rgba(255,255,255,0.3)'">business_center</mat-icon>
+          <div style="font-size:14px;font-weight:500;color:white;">Recruiter</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px;">Find top candidates</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Registration Form -->
+    <div class="glass-card" style="padding:24px;">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" style="display:flex;flex-direction:column;gap:16px;">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Full Name</mat-label>
+          <input matInput formControlName="fullName" placeholder="John Doe">
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error>Full name required (min 2 characters)</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Email Address</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="john@company.com">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error *ngIf="form.get('email')?.hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="form.get('email')?.hasError('email')">Enter a valid email</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'">
+          <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+            <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+          <mat-hint>Minimum 8 characters</mat-hint>
+          <mat-error>Password must be at least 8 characters</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput formControlName="confirmPassword" type="password">
+          <mat-icon matSuffix>lock</mat-icon>
+          <mat-error *ngIf="form.hasError('passwordMismatch')">Passwords do not match</mat-error>
+        </mat-form-field>
+
+        <button type="submit" class="btn-primary w-full" style="padding:14px;font-size:16px;margin-top:8px;" [disabled]="form.invalid || loading">
+          <span *ngIf="!loading">Create Account</span>
+          <span *ngIf="loading">Creating account...</span>
+        </button>
+
+        <p style="text-align:center;font-size:14px;color:rgba(255,255,255,0.4);">
+          Already have an account?
+          <a routerLink="/auth/login" style="color:#3b82f6;text-decoration:none;font-weight:500;">Sign in</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
