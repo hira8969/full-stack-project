@@ -1,0 +1,134 @@
+<div style="padding:24px;">
+
+  <!-- Welcome Banner -->
+  <div class="glass-card" style="padding:32px;margin-bottom:24px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-60px;right:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(59,130,246,0.08) 0%,transparent 70%);pointer-events:none;"></div>
+    <div style="position:relative;">
+      <p style="color:rgba(255,255,255,0.5);margin-bottom:4px;font-size:14px;">{{ getGreeting() }},</p>
+      <h1 style="font-family:'Outfit',sans-serif;font-size:32px;font-weight:700;color:white;margin-bottom:8px;">{{ currentUser?.fullName }} 👋</h1>
+      <p style="color:rgba(255,255,255,0.45);margin-bottom:24px;">Here's what's happening with your career today</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;">
+        <a routerLink="/dashboard/resume-builder" class="btn-primary" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;font-size:14px;">
+          <mat-icon style="font-size:18px;width:18px;height:18px;">add</mat-icon>Create New Resume
+        </a>
+        <a routerLink="/dashboard/analyzer" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px;">
+          <mat-icon style="font-size:18px;width:18px;height:18px;">analytics</mat-icon>Analyze Resume
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;">
+    <div class="glass-card" style="padding:20px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <span style="color:rgba(255,255,255,0.5);font-size:13px;">Total Resumes</span>
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(59,130,246,0.15);display:flex;align-items:center;justify-content:center;">
+          <mat-icon style="color:#3b82f6;font-size:18px;width:18px;height:18px;">description</mat-icon>
+        </div>
+      </div>
+      <div style="font-size:32px;font-weight:700;color:white;">{{ stats.totalResumes }}</div>
+    </div>
+
+    <div class="glass-card" style="padding:20px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <span style="color:rgba(255,255,255,0.5);font-size:13px;">Avg ATS Score</span>
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(139,92,246,0.15);display:flex;align-items:center;justify-content:center;">
+          <mat-icon style="color:#8b5cf6;font-size:18px;width:18px;height:18px;">analytics</mat-icon>
+        </div>
+      </div>
+      <div style="font-size:32px;font-weight:700;" [style.color]="getScoreColor(stats.avgAtsScore)">{{ stats.avgAtsScore }}%</div>
+      <mat-progress-bar mode="determinate" [value]="stats.avgAtsScore" style="margin-top:8px;border-radius:4px;height:4px;"></mat-progress-bar>
+    </div>
+
+    <div class="glass-card" style="padding:20px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <span style="color:rgba(255,255,255,0.5);font-size:13px;">Applications</span>
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(16,185,129,0.15);display:flex;align-items:center;justify-content:center;">
+          <mat-icon style="color:#10b981;font-size:18px;width:18px;height:18px;">work</mat-icon>
+        </div>
+      </div>
+      <div style="font-size:32px;font-weight:700;color:white;">{{ stats.applications }}</div>
+    </div>
+
+    <div class="glass-card" style="padding:20px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <span style="color:rgba(255,255,255,0.5);font-size:13px;">AI Credits</span>
+        <div style="width:36px;height:36px;border-radius:10px;background:rgba(245,158,11,0.15);display:flex;align-items:center;justify-content:center;">
+          <mat-icon style="color:#f59e0b;font-size:18px;width:18px;height:18px;">auto_awesome</mat-icon>
+        </div>
+      </div>
+      <div style="font-size:32px;font-weight:700;color:white;">{{ stats.aiCredits }}</div>
+    </div>
+  </div>
+
+  <!-- Quick Actions + Recent Resumes -->
+  <div style="display:grid;grid-template-columns:1fr 2fr;gap:16px;">
+
+    <!-- Quick Actions -->
+    <div class="glass-card" style="padding:20px;">
+      <h3 style="font-size:16px;font-weight:600;color:white;margin-bottom:16px;">Quick Actions</h3>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <a *ngFor="let action of quickActions" [routerLink]="action.route"
+           style="display:flex;align-items:center;gap:14px;padding:12px;border-radius:12px;cursor:pointer;text-decoration:none;transition:background 0.2s;"
+           onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
+          <div style="width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;" [style.background]="action.color + '20'">
+            <mat-icon [style.color]="action.color" style="font-size:20px;width:20px;height:20px;">{{ action.icon }}</mat-icon>
+          </div>
+          <div>
+            <div style="font-size:14px;font-weight:500;color:white;">{{ action.title }}</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.4);">{{ action.desc }}</div>
+          </div>
+          <mat-icon style="color:rgba(255,255,255,0.2);font-size:18px;width:18px;height:18px;margin-left:auto;">chevron_right</mat-icon>
+        </a>
+      </div>
+    </div>
+
+    <!-- Recent Resumes -->
+    <div class="glass-card" style="padding:20px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <h3 style="font-size:16px;font-weight:600;color:white;">Recent Resumes</h3>
+        <a routerLink="/dashboard/my-resumes" style="color:#3b82f6;font-size:13px;text-decoration:none;">View all →</a>
+      </div>
+
+      <!-- Loading skeleton -->
+      <div *ngIf="loading">
+        <div *ngFor="let i of [1,2,3]" style="display:flex;gap:12px;padding:12px;margin-bottom:8px;border-radius:10px;background:rgba(255,255,255,0.03);">
+          <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.08);animation:pulse 1.5s infinite;"></div>
+          <div style="flex:1;">
+            <div style="height:12px;background:rgba(255,255,255,0.08);border-radius:4px;margin-bottom:8px;animation:pulse 1.5s infinite;"></div>
+            <div style="height:10px;background:rgba(255,255,255,0.05);border-radius:4px;width:60%;animation:pulse 1.5s infinite;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <div *ngIf="!loading && resumes.length === 0" style="text-align:center;padding:32px;">
+        <mat-icon style="font-size:48px;width:48px;height:48px;color:rgba(255,255,255,0.15);">description</mat-icon>
+        <p style="color:rgba(255,255,255,0.4);margin-top:12px;margin-bottom:16px;font-size:14px;">No resumes yet. Create your first!</p>
+        <a routerLink="/dashboard/resume-builder" class="btn-primary" style="font-size:13px;padding:8px 16px;display:inline-block;">Create Resume</a>
+      </div>
+
+      <!-- Resume list -->
+      <div *ngIf="!loading && resumes.length > 0" style="display:flex;flex-direction:column;gap:4px;">
+        <div *ngFor="let resume of resumes"
+             style="display:flex;align-items:center;gap:14px;padding:12px;border-radius:12px;transition:background 0.2s;"
+             onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background='transparent'">
+          <div style="width:40px;height:40px;border-radius:10px;background:rgba(59,130,246,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <mat-icon style="color:#3b82f6;font-size:20px;width:20px;height:20px;">description</mat-icon>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:14px;font-weight:500;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ resume.title }}</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.4);">{{ resume.templateType?.replace('_', ' ') }} · v{{ resume.version }}</div>
+          </div>
+          <div style="font-size:15px;font-weight:700;flex-shrink:0;" [style.color]="getScoreColor(resume.atsScore || 0)">
+            {{ resume.atsScore || '--' }}%
+          </div>
+          <a [routerLink]="['/dashboard/resume-builder', resume.id]" style="color:rgba(255,255,255,0.25);transition:color 0.2s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='rgba(255,255,255,0.25)'">
+            <mat-icon style="font-size:18px;width:18px;height:18px;">edit</mat-icon>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
