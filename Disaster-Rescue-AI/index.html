@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07151d" />
+    <title>Relay One | Rescue Operations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary navigation">
+        <a class="brand" href="#" aria-label="Relay One home">
+          <span class="brand-mark"><i></i><i></i><i></i></span>
+          <span>RELAY<br />ONE</span>
+        </a>
+        <nav>
+          <a class="nav-link active" href="#overview" data-view="overview"><span class="nav-icon">&#9672;</span><span>Operations</span></a>
+          <a class="nav-link" href="#alerts" data-view="alerts"><span class="nav-icon">!</span><span>Active alerts</span><b id="alertBadge">4</b></a>
+          <a class="nav-link" href="#teams" data-view="teams"><span class="nav-icon">&#9678;</span><span>Response teams</span></a>
+          <a class="nav-link" href="#shelters" data-view="shelters"><span class="nav-icon">&#8962;</span><span>Shelters</span></a>
+          <a class="nav-link" href="#analytics" data-view="analytics"><span class="nav-icon">&#9646;</span><span>Intelligence</span></a>
+        </nav>
+        <div class="network-card">
+          <span class="network-pulse"></span>
+          <div><strong>Mesh relay healthy</strong><small>38 nodes in range</small></div>
+          <button class="icon-button" title="Network details" aria-label="Network details">&#8250;</button>
+        </div>
+        <div class="operator">
+          <div class="avatar">AS</div>
+          <div><strong>Ananya Shah</strong><small>Incident commander</small></div>
+          <button class="icon-button" title="Account menu" aria-label="Account menu">&#8942;</button>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">District response center <span class="live-dot"></span> LIVE</p>
+            <h1>Flood response <span> / East sector</span></h1>
+          </div>
+          <div class="top-actions">
+            <div class="timebox"><span id="clock">09:42:18</span><small>IST · 14 AUG 2026</small></div>
+            <button class="icon-button bordered" id="soundButton" title="Toggle alert sound" aria-label="Toggle alert sound">&#9834;</button>
+            <button class="new-incident" id="incidentButton"><span>+</span> Log incident</button>
+          </div>
+        </header>
+
+        <section class="metrics" aria-label="Situation metrics">
+          <article><p>Open SOS</p><strong id="openSos">24</strong><small class="danger">+6 <span>last hour</span></small></article>
+          <article><p>High priority</p><strong id="priorityCount">07</strong><small class="warning">03 <span>unassigned</span></small></article>
+          <article><p>Teams deployed</p><strong>12 <span>/ 18</span></strong><small class="positive">67% <span>capacity</span></small></article>
+          <article><p>People in shelters</p><strong>1,847</strong><small class="neutral">14 <span>sites active</span></small></article>
+          <article><p>Rainfall intensity</p><strong>28 <span>mm/h</span></strong><small class="danger">Severe <span>next 90 min</span></small></article>
+        </section>
+
+        <section class="workspace">
+          <div class="map-panel">
+            <div class="map-toolbar">
+              <div class="map-title"><span class="pin-icon">&#9670;</span><div><strong>Operational map</strong><small>3.1869 N, 101.6964 E · Updated seconds ago</small></div></div>
+              <div class="map-controls"><button class="map-control active" data-layer="all">All layers</button><button class="map-control" data-layer="incidents">SOS</button><button class="map-control" data-layer="teams">Teams</button><button class="map-control" data-layer="shelters">Shelters</button><button class="icon-button map-expand" title="Expand map" aria-label="Expand map">&#8599;</button></div>
+            </div>
+            <div class="map" id="map">
+              <div class="water water-one"></div><div class="water water-two"></div><div class="water water-three"></div>
+              <div class="road road-one"></div><div class="road road-two"></div><div class="road road-three"></div><div class="road road-four"></div>
+              <div class="district d-one">KAMPUNG BARU</div><div class="district d-two">TAMAN MELATI</div><div class="district d-three">SETAPAK</div><div class="district d-four">GOMBAK</div>
+              <div class="danger-zone z-one"><span>HIGH FLOOD RISK</span></div><div class="danger-zone z-two"></div>
+              <div class="route"><span class="route-start"></span><i></i><span class="route-end"></span></div>
+              <button class="marker critical incident-marker" style="left:35%;top:50%" data-incident="RS-2048" aria-label="Critical SOS RS-2048"><span>!</span><em>3</em></button>
+              <button class="marker high incident-marker" style="left:52%;top:35%" data-incident="RS-2051" aria-label="High SOS RS-2051"><span>!</span></button>
+              <button class="marker medium incident-marker" style="left:68%;top:57%" data-incident="RS-2053" aria-label="Medium SOS RS-2053"><span>!</span></button>
+              <button class="marker critical incident-marker" style="left:76%;top:29%" data-incident="RS-2057" aria-label="Critical SOS RS-2057"><span>!</span></button>
+              <span class="team-marker" style="left:45%;top:68%" title="Team Alpha"><i></i>A</span><span class="team-marker" style="left:62%;top:45%" title="Team Delta"><i></i>D</span>
+              <span class="shelter-marker" style="left:28%;top:27%" title="Shelter 04">&#8962;</span><span class="shelter-marker" style="left:82%;top:68%" title="Shelter 11">&#8962;</span>
+              <div class="map-scale"><span></span>500 m</div>
+              <div class="legend"><span><i class="legend-dot critical-dot"></i>Critical</span><span><i class="legend-dot high-dot"></i>High</span><span><i class="legend-dot team-dot"></i>Team</span><span><i class="legend-house">&#8962;</i>Shelter</span></div>
+            </div>
+          </div>
+
+          <aside class="incident-panel">
+            <div class="panel-heading"><div><p class="eyebrow">Priority queue</p><h2>Incoming SOS</h2></div><button class="text-button" id="viewAllButton">View all</button></div>
+            <div class="incident-list" id="incidentList"></div>
+            <div class="recommendation"><div class="ai-mark">AI</div><div><p>ROUTE RECOMMENDATION</p><strong>Divert Team Delta via Jalan Gombak</strong><small>12 min faster · avoids flood zone</small></div><button class="icon-button" aria-label="Use route recommendation" title="Use route recommendation">&#8594;</button></div>
+          </aside>
+        </section>
+
+        <section class="lower-grid">
+          <article class="teams-panel"><div class="panel-heading"><div><p class="eyebrow">Field coordination</p><h2>Response teams</h2></div><button class="text-button" data-view="teams">Manage teams</button></div><div id="teamList"></div></article>
+          <article class="shelter-panel"><div class="panel-heading"><div><p class="eyebrow">Capacity watch</p><h2>Shelters</h2></div><button class="text-button" data-view="shelters">View network</button></div><div id="shelterList"></div></article>
+          <article class="risk-panel"><div class="panel-heading"><div><p class="eyebrow">Forecast model</p><h2>Risk outlook</h2></div><span class="model-status">Model updated</span></div><div class="risk-content"><div class="risk-score"><strong>84</strong><span>/100</span><small>Flood escalation risk</small></div><div class="bars"><div><p>Next 3 hours <b>High</b></p><span><i style="width:84%"></i></span></div><div><p>Next 6 hours <b>Moderate</b></p><span><i style="width:58%"></i></span></div><div><p>Next 12 hours <b>Lower</b></p><span><i style="width:34%"></i></span></div></div></div><p class="risk-note">Rainfall and upstream gauge readings indicate additional overflow around the Gombak corridor.</p></article>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="incidentDialog"><form method="dialog"><div class="dialog-heading"><div><p class="eyebrow">New report</p><h2>Log an incident</h2></div><button class="icon-button" value="cancel" aria-label="Close">&#215;</button></div><label>Report type<select id="incidentType"><option>Flooding</option><option>Medical emergency</option><option>Blocked road</option><option>Structural damage</option></select></label><label>Location<input id="incidentLocation" required placeholder="Area or coordinates" /></label><label>Priority<select id="incidentPriority"><option value="critical">Critical</option><option value="high">High</option><option value="medium">Medium</option></select></label><menu><button value="cancel" class="cancel">Cancel</button><button id="submitIncident" value="default">Create incident</button></menu></form></dialog>
+    <script src="app.js"></script>
+  </body>
+</html>
