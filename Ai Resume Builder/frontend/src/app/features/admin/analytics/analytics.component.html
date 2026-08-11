@@ -1,0 +1,64 @@
+<div style="padding:24px;">
+  <div style="margin-bottom:24px;">
+    <h1 style="font-family:'Outfit',sans-serif;font-size:28px;font-weight:700;color:white;margin-bottom:4px;">Platform Analytics</h1>
+    <p style="color:rgba(255,255,255,0.45);">Real-time metrics and platform performance insights</p>
+  </div>
+
+  <!-- Today's Metrics -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px;">
+    <div class="glass-card" style="padding:18px;text-align:center;">
+      <div style="font-size:28px;font-weight:700;color:#3b82f6;margin-bottom:4px;">{{ stats.dailyActiveUsers }}</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4);">Active Users Today</div>
+    </div>
+    <div class="glass-card" style="padding:18px;text-align:center;">
+      <div style="font-size:28px;font-weight:700;color:#8b5cf6;margin-bottom:4px;">{{ stats.resumesCreatedToday }}</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4);">Resumes Created</div>
+    </div>
+    <div class="glass-card" style="padding:18px;text-align:center;">
+      <div style="font-size:28px;font-weight:700;color:#06b6d4;margin-bottom:4px;">{{ stats.atsAnalysesToday }}</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4);">ATS Analyses</div>
+    </div>
+    <div class="glass-card" style="padding:18px;text-align:center;">
+      <div style="font-size:28px;font-weight:700;color:#f59e0b;margin-bottom:4px;">{{ stats.aiRequestsToday }}</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4);">AI Requests</div>
+    </div>
+    <div class="glass-card" style="padding:18px;text-align:center;">
+      <div style="font-size:28px;font-weight:700;color:#10b981;margin-bottom:4px;">{{ stats.avgAtsScore }}%</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4);">Avg ATS Score</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+    <!-- Top Templates -->
+    <div class="glass-card" style="padding:20px;">
+      <h3 style="font-size:15px;font-weight:600;color:white;margin-bottom:16px;display:flex;align-items:center;gap:8px;">
+        <mat-icon style="color:#3b82f6;font-size:18px;width:18px;height:18px;">bar_chart</mat-icon>Top Templates Used
+      </h3>
+      <div *ngFor="let tpl of stats.topTemplates" style="margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span style="font-size:13px;color:rgba(255,255,255,0.7);">{{ tpl.name }}</span>
+          <span style="font-size:13px;color:rgba(255,255,255,0.5);">{{ tpl.count }} ({{ tpl.percentage }}%)</span>
+        </div>
+        <div style="height:6px;border-radius:3px;background:rgba(255,255,255,0.06);">
+          <div style="height:100%;border-radius:3px;background:linear-gradient(90deg,#3b82f6,#8b5cf6);transition:width 0.5s ease;" [style.width]="tpl.percentage + '%'"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Growth Table -->
+    <div class="glass-card" style="padding:20px;">
+      <h3 style="font-size:15px;font-weight:600;color:white;margin-bottom:16px;display:flex;align-items:center;gap:8px;">
+        <mat-icon style="color:#10b981;font-size:18px;width:18px;height:18px;">trending_up</mat-icon>User Growth (2026)
+      </h3>
+      <div *ngFor="let entry of stats.userGrowth" style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+        <span style="font-size:12px;color:rgba(255,255,255,0.4);width:30px;flex-shrink:0;">{{ entry.month }}</span>
+        <div style="flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,0.06);">
+          <div style="height:100%;border-radius:4px;background:linear-gradient(90deg,#10b981,#06b6d4);transition:width 0.5s ease;"
+               [style.width]="(entry.users / 1248 * 100) + '%'"></div>
+        </div>
+        <span style="font-size:12px;color:rgba(255,255,255,0.6);width:40px;text-align:right;flex-shrink:0;">{{ entry.users }}</span>
+      </div>
+    </div>
+  </div>
+</div>
