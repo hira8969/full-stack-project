@@ -12037,3 +12037,4 @@ Hibernate:
 2026-08-14T01:16:09.449+05:30 DEBUG 22184 --- [shopsphere-backend] [nio-8081-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2026-08-14T02:34:21.133+05:30  WARN 22184 --- [shopsphere-backend] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m30s19ms469µs800ns).
 2026-08-14T13:39:18.133+05:30  WARN 22184 --- [shopsphere-backend] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=11h5m5s555ms757µs700ns).
+2026-08-14T14:06:51.715+05:30  WARN 22184 --- [shopsphere-backend] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m2s303ms20µs200ns).
