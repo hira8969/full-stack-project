@@ -1,0 +1,62 @@
+CREATE DATABASE IF NOT EXISTS bizflow_erp;
+USE bizflow_erp;
+
+CREATE TABLE tenants (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(160) NOT NULL,
+  code VARCHAR(60) NOT NULL UNIQUE,
+  plan VARCHAR(40) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE users (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  tenant_id BIGINT NOT NULL,
+  name VARCHAR(140) NOT NULL,
+  email VARCHAR(180) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(60) NOT NULL,
+  active BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (tenant_id) REFERENCES tenants(id)
+);
+
+CREATE TABLE crm_leads (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  tenant_id BIGINT NOT NULL,
+  company_name VARCHAR(180) NOT NULL,
+  contact_name VARCHAR(140),
+  email VARCHAR(180),
+  phone VARCHAR(40),
+  status VARCHAR(40) NOT NULL,
+  deal_value DECIMAL(14,2) DEFAULT 0,
+  owner_user_id BIGINT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (tenant_id) REFERENCES tenants(id)
+);
+
+CREATE TABLE products (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  tenant_id BIGINT NOT NULL,
+  sku VARCHAR(80) NOT NULL,
+  name VARCHAR(180) NOT NULL,
+  category VARCHAR(120),
+  brand VARCHAR(120),
+  reorder_level INT DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE (tenant_id, sku),
+  FOREIGN KEY (tenant_id) REFERENCES tenants(id)
+);
+
+CREATE TABLE employees (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  tenant_id BIGINT NOT NULL,
+  employee_code VARCHAR(60) NOT NULL,
+  name VARCHAR(140) NOT NULL,
+  department VARCHAR(120),
+  designation VARCHAR(120),
+  status VARCHAR(40) DEFAULT 'ACTIVE',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE (tenant_id, employee_code),
+  FOREIGN KEY (tenant_id) REFERENCES tenants(id)
+);
