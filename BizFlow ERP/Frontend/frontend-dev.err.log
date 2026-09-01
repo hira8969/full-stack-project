@@ -1,0 +1,3 @@
+npm notice run bizflow-erp-frontend@0.1.0 start
+npm notice run ng serve --host 127.0.0.1 --port 4200
+Prebundling has been configured but will not be used because scripts optimization is enabled.
