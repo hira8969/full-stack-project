@@ -1,0 +1,17 @@
+CREATE TABLE tenants (
+  id VARCHAR(36) PRIMARY KEY,
+  name VARCHAR(160) NOT NULL,
+  code VARCHAR(60) NOT NULL UNIQUE,
+  plan VARCHAR(40) NOT NULL
+);
+
+CREATE TABLE app_users (
+  id VARCHAR(36) PRIMARY KEY,
+  tenant_id VARCHAR(36) NOT NULL,
+  name VARCHAR(140) NOT NULL,
+  email VARCHAR(180) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(60) NOT NULL,
+  active BOOLEAN NOT NULL,
+  FOREIGN KEY (tenant_id) REFERENCES tenants(id)
+);
