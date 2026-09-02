@@ -1,0 +1,83 @@
+<div class="food-section">
+
+  <div class="container">
+
+    <!-- Header -->
+    <div class="section-header">
+      <div>
+        <h2>Food Menu</h2>
+        <p>Discover delicious food near you</p>
+      </div>
+
+      <button class="filter-btn">
+        <span>☰</span> Filters
+      </button>
+    </div>
+
+    <!-- Food Grid -->
+    <div class="food-grid">
+
+      @for (food of foods; track food.id) {
+
+        <div class="food-card">
+
+          <!-- Image Section -->
+          <div class="food-image-wrapper">
+
+            <img
+              [src]="food.image"
+              [alt]="food.name"
+              class="food-image"
+            >
+
+            <!-- Rating -->
+            <div class="rating-badge">
+              ⭐ {{ food.rating }}
+            </div>
+
+            <!-- Discount -->
+            <div class="discount-badge">
+              20% OFF
+            </div>
+
+          </div>
+
+          <!-- Content -->
+          <div class="food-content">
+
+            <h3 class="food-name">
+              {{ food.name }}
+            </h3>
+
+            <p class="food-description">
+              {{ food.description }}
+            </p>
+
+            <div class="food-info">
+
+              <span class="price">
+                ₹{{ food.price }}
+              </span>
+
+              <span class="delivery-time">
+                🕒 25-30 min
+              </span>
+
+            </div>
+
+            <button class="add-cart-btn">
+              <span>+</span>
+              Add to Cart
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  </div>
+
+</div>
